@@ -5,7 +5,7 @@
 **Table of Content**
 - [Dec1- MaxDepth of BT](#decemeber-1-maxdepth-of-a-binary-tree)
 - [Dec2- Random Node of LL](#december-2-linked-list-random-node)
-
+- [Dec3- Increasing Order of Search Tree](#decemeber-3-increasing-order-search-tree)
 
 
 
@@ -45,6 +45,7 @@ class Solution {
 ### December 2 Linked List Random Node
 
 Q: Given a singly linked list, return a random node's value from the linked list. Each node must have the same probability of being chosen.
+
 A:
 ```
 /**
@@ -84,6 +85,47 @@ class Solution {
         }
         return res;
         
+    }
+}
+```
+
+
+### Decemeber 3 Increasing Order Search Tree
+
+Q: Given the root of a binary search tree, rearrange the tree in in-order so that the leftmost node in the tree is now the root of the tree, and every node has no left child and only one right child.
+
+A:
+```
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    TreeNode current;
+    public TreeNode increasingBST(TreeNode root) {
+      TreeNode head = new TreeNode(0);
+        current = head;
+        inorder(root);
+        return head.right;
+    }
+    
+    private void inorder(TreeNode root) {
+        if(root == null) return;
+        inorder(root.left);
+        root.left = null;
+        current = current.right = root;
+        inorder(root.right);
     }
 }
 ```
