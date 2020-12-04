@@ -6,7 +6,7 @@
 - [Dec1- MaxDepth of BT](#decemeber-1-maxdepth-of-a-binary-tree)
 - [Dec2- Random Node of LL](#december-2-linked-list-random-node)
 - [Dec3- Increasing Order of Search Tree](#decemeber-3-increasing-order-search-tree)
-- [Dec3- The kth Factor of n](#decemeber-4-the-kth-factor-of-n)
+- [Dec4- The kth Factor of n](#decemeber-4-the-kth-factor-of-n)
 
 
  ### Decemeber 1 MaxDepth of a Binary Tree
