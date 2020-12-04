@@ -6,7 +6,7 @@
 - [Dec1- MaxDepth of BT](#decemeber-1-maxdepth-of-a-binary-tree)
 - [Dec2- Random Node of LL](#december-2-linked-list-random-node)
 - [Dec3- Increasing Order of Search Tree](#decemeber-3-increasing-order-search-tree)
-
+- [Dec3- The kth Factor of n](#decemeber-4-the-kth-factor-of-n)
 
 
  ### Decemeber 1 MaxDepth of a Binary Tree
@@ -16,7 +16,7 @@
 A binary tree's maximum depth is the number of nodes along the longest path from the root node down to the farthest leaf node.
 
 A:
-```
+```java
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -47,7 +47,7 @@ class Solution {
 Q: Given a singly linked list, return a random node's value from the linked list. Each node must have the same probability of being chosen.
 
 A:
-```
+```java
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -95,7 +95,7 @@ class Solution {
 Q: Given the root of a binary search tree, rearrange the tree in in-order so that the leftmost node in the tree is now the root of the tree, and every node has no left child and only one right child.
 
 A:
-```
+```java
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -126,6 +126,33 @@ class Solution {
         root.left = null;
         current = current.right = root;
         inorder(root.right);
+    }
+}
+```
+
+### Decemeber 4 The kth Factor of n
+
+Q: Given two positive integers n and k.
+A factor of an integer n is defined as an integer i where n % i == 0.
+Consider a list of all factors of n sorted in ascending order, return the kth factor in this list or return -1 if n has less than k factors.
+
+
+A:
+```java
+class Solution {
+    public int kthFactor(int n, int k) {
+     
+        ArrayList<Integer> arr = new ArrayList<>();
+        
+        for(int i=1; i<=n; i++)
+            if(n%i==0) arr.add(i);
+        
+        if(arr.size() < k) return -1;
+        
+        Collections.sort(arr);   
+        
+        return arr.get(k-1);
+        
     }
 }
 ```
