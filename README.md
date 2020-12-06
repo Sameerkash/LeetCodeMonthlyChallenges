@@ -7,7 +7,7 @@
 - [Dec2- Random Node of LL](#december-2-linked-list-random-node)
 - [Dec3- Increasing Order of Search Tree](#decemeber-3-increasing-order-search-tree)
 - [Dec4- The kth Factor of n](#decemeber-4-the-kth-factor-of-n)
-
+- [Dec5- The kth Factor of n](#decemeber-5-can-place-flowers)
 
  ### Decemeber 1 MaxDepth of a Binary Tree
  
@@ -158,7 +158,7 @@ class Solution {
 ```
 
 
-### December 5  Can Place Flowers
+### December 5 Can Place Flowers
 
 
 Q: You have a long flowerbed in which some of the plots are planted, and some are not. However, flowers cannot be planted in adjacent plots.
