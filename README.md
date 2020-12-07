@@ -8,6 +8,9 @@
 - [Dec3- Increasing Order of Search Tree](#decemeber-3-increasing-order-search-tree)
 - [Dec4- The kth Factor of n](#decemeber-4-the-kth-factor-of-n)
 - [Dec5- The kth Factor of n](#decemeber-5-can-place-flowers)
+- [Dec6- The kth Factor of n](#decemeber-6-populating-next-right-pointers-in-each-node-ii)
+- [Dec7- Spiral Matrix II](#december-7-spiral-matrix-ii)
+
 
  ### Decemeber 1 MaxDepth of a Binary Tree
  
@@ -190,3 +193,121 @@ class Solution {
 }
 
 ```
+
+
+### December 6 Populating Next Right Pointers in Each Node II
+
+
+Q: Populate each next pointer to point to its next right node. If there is no next right node, the next pointer should be set to NULL.
+Initially, all next pointers are set to NULL.
+
+A: 
+```java
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node left;
+    public Node right;
+    public Node next;
+
+    public Node() {}
+    
+    public Node(int _val) {
+        val = _val;
+    }
+
+    public Node(int _val, Node _left, Node _right, Node _next) {
+        val = _val;
+        left = _left;
+        right = _right;
+        next = _next;
+    }
+};
+*/
+
+class Solution {
+    public Node connect(Node root) {
+        
+        if(root == null) return root;
+        Queue<Node> q = new LinkedList<>();
+        
+        if(q.isEmpty()) q.add(root);
+        
+        while(!q.isEmpty()){
+            int s = q.size();
+            Node prev = null;
+            
+            while(s-- > 0){
+                 Node node = q.poll();
+                
+                if(prev!=null) prev.next = node;
+                prev = node;
+                
+                
+                if(node.left!=null) q.add(node.left);
+                if(node.right!=null) q.add(node.right);
+               
+            }
+
+        }
+         return root;
+    }
+   
+}
+    
+```
+
+
+### December 7 Spiral Matrix II
+
+Q: Given a positive integer n, generate an n x n matrix filled with elements from 1 to n2 in spiral order.
+
+A: 
+```java
+class Solution {
+    public int[][] generateMatrix(int n) {
+        
+        int[][] result = new int[n][n];
+ 
+    int k=1; 
+    int top=0;
+    int bottom=n-1;
+    int left=0;
+    int right=n-1;
+ 
+    while(k<=n*n){
+        for(int i=left; i<=right; i++){
+            result[top][i]=k;
+            k++;
+        }    
+        top++;
+ 
+        for(int i=top; i<=bottom; i++){
+            result[i][right]=k;
+            k++;
+        }
+        right--;
+ 
+        for(int i=right; i>=left; i--){
+            result[bottom][i]=k;
+            k++;
+        }
+        bottom--;
+ 
+        for(int i=bottom; i>=top; i--){
+            result[i][left] = k;
+            k++;
+        }
+        left++;
+    }
+ 
+    return result;
+    }
+}
+```
+
+
+
+
+
