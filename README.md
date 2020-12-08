@@ -10,6 +10,7 @@
 - [Dec5- The kth Factor of n](#decemeber-5-can-place-flowers)
 - [Dec6- The kth Factor of n](#decemeber-6-populating-next-right-pointers-in-each-node-ii)
 - [Dec7- Spiral Matrix II](#december-7-spiral-matrix-ii)
+- [Dec8- Pairs of Songs With Total Durations Divisible by 60](#decemeber-8-pairs-of-songs-with-total-durations-divisible-by-60)
 
 
  ### Decemeber 1 MaxDepth of a Binary Tree
@@ -307,7 +308,30 @@ class Solution {
 }
 ```
 
+### December 8 Pairs of Songs With Total Durations Divisible by 60
 
+Q: You are given a list of songs where the ith song has a duration of time[i] seconds.
+Return the number of pairs of songs for which their total duration in seconds is divisible by 60. Formally, we want the number of indices i, j such that i < j with (time[i] + time[j]) % 60 == 0.
+
+A:
+```java
+class Solution {
+    public int numPairsDivisibleBy60(int[] time) {
+        int count =0 ;
+        int map[] = new int[60];
+        
+        for(int t: time){
+            if(t % 60 == 0)
+                count+=map[0];
+            else
+                count+= map[60 - t % 60];
+            map[t%60]++;
+        }
+    return count;
+    }
+}
+
+```
 
 
 
