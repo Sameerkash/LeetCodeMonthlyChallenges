@@ -11,6 +11,7 @@
 - [Dec6- The kth Factor of n](#decemeber-6-populating-next-right-pointers-in-each-node-ii)
 - [Dec7- Spiral Matrix II](#december-7-spiral-matrix-ii)
 - [Dec8- Pairs of Songs With Total Durations Divisible by 60](#decemeber-8-pairs-of-songs-with-total-durations-divisible-by-60)
+- [Dec9-9 Binary Search Tree Iterator](#decemeber-9 -binary-search-tree-iterator)
 
 
  ### Decemeber 1 MaxDepth of a Binary Tree
@@ -335,3 +336,65 @@ class Solution {
 
 
 
+### December 9  Binary Search Tree Iterator
+
+Q: Implement the BSTIterator class that represents an iterator over the in-order traversal of a binary search tree (BST):
+BSTIterator(TreeNode root) Initializes an object of the BSTIterator class. The root of the BST is given as part of the constructor. The pointer should be initialized to a non-existent number smaller than any element in the BST.
+boolean hasNext() Returns true if there exists a number in the traversal to the right of the pointer, otherwise returns false.
+int next() Moves the pointer to the right, then returns the number at the pointer.
+Notice that by initializing the pointer to a non-existent smallest number, the first call to next() will return the smallest element in the BST.
+You may assume that next() calls will always be valid. That is, there will be at least a next number in the in-order traversal when next() is called.
+
+A:
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class BSTIterator {
+
+    Stack<TreeNode> stack = new Stack<>();
+    
+    public  void pushToLeft(TreeNode node){
+        if(node!=null){
+            stack.push(node);
+            pushToLeft(node.left);
+        }
+    }
+    
+    public BSTIterator(TreeNode root) {
+        pushToLeft(root);
+    }
+    
+    public int next() {
+        TreeNode node = stack.pop();
+        pushToLeft(node.right);
+        return node.val;
+    }
+    
+    public boolean hasNext() {
+        if(stack.isEmpty())
+            return false;
+        return true;
+    }
+}
+
+/**
+ * Your BSTIterator object will be instantiated and called as such:
+ * BSTIterator obj = new BSTIterator(root);
+ * int param_1 = obj.next();
+ * boolean param_2 = obj.hasNext();
+ */
+
+```
