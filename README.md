@@ -11,7 +11,7 @@
 - [Dec6- The kth Factor of n](#decemeber-6-populating-next-right-pointers-in-each-node-ii)
 - [Dec7- Spiral Matrix II](#december-7-spiral-matrix-ii)
 - [Dec8- Pairs of Songs With Total Durations Divisible by 60](#decemeber-8-pairs-of-songs-with-total-durations-divisible-by-60)
-- [Dec9-9 Binary Search Tree Iterator](#decemeber-9 -binary-search-tree-iterator)
+- [Dec9- Binary Search Tree Iterator](#decemeber-9-binary-search-tree-iterator)
 
 
  ### Decemeber 1 MaxDepth of a Binary Tree
