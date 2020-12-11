@@ -13,6 +13,7 @@
 - [Dec8- Pairs of Songs With Total Durations Divisible by 60](#decemeber-8-pairs-of-songs-with-total-durations-divisible-by-60)
 - [Dec9- Binary Search Tree Iterator](#decemeber-9-binary-search-tree-iterator)
 - [Dec10- Valid Mountain Array](#decemeber-10-valid-mountain-array)
+- [Dec11- Remove Duplicates from Sorted Array II](#decemeber-11-remove-duplicates-from-sorted-array-ii)
 
 
 
@@ -432,5 +433,26 @@ class Solution {
 
 ```
 
+### December 11 Remove Duplicates from Sorted Array II
 
+Q:Given a sorted array nums, remove the duplicates in-place such that duplicates appeared at most twice and return the new length.
+Do not allocate extra space for another array; you must do this by modifying the input array in-place with O(1) extra memory.
+
+A:
+```java
+class Solution {
+    public int removeDuplicates(int[] arr) {
+    int n = arr.length;
+    int j =0;
+        
+        for(int i=0;i<n;i++){
+            if(i<n-2 && arr[i]==arr[i+2])
+                continue;
+            
+            arr[j++] = arr[i];
+        }
+        return j;
+    }
+}
+```
 
