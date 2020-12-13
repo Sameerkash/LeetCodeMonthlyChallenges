@@ -15,6 +15,8 @@
 - [Dec10- Valid Mountain Array](#decemeber-10-valid-mountain-array)
 - [Dec11- Remove Duplicates from Sorted Array II](#decemeber-11-remove-duplicates-from-sorted-array-ii)
 - [Dec12- Smallest Subtree with all the Deepest Nodes](#decemeber-12-smallest-subtree-with-all-the-deepest-nodes)
+- [Dec12- Burst Balloons](#decemeber-13-burst-balloons)
+
 
 
 
@@ -504,6 +506,41 @@ class Solution {
                 result = node;
         }
         return Math.max(left, right);
+    }
+}
+```
+
+
+### December 13 Burst Balloons
+
+QGiven n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums. You are asked to burst all the balloons. If the you burst balloon i you will get nums[left] * nums[i] * nums[right] coins. Here left and right are adjacent indices of i. After the burst, the left and right then becomes adjacent.
+Find the maximum coins you can collect by bursting the balloons wisely.
+
+A:
+```java
+
+class Solution {
+    public int maxCoins(int[] nums) {
+        int length = nums.length;
+        int index = 1;
+        int [] newNums = new int [length + 2];
+        for (int number: nums)
+            if (number > 0)
+                newNums[index++] = number;
+        newNums[0] = 1;
+        newNums[index++] = 1;
+        int [][] dp = new int [length+2][length+2];
+       
+        for (int k=2; k<length+2; k++) {
+            for (int left = 0; left < index - k; left ++) {
+                int right = left + k;
+                for (int i=left+1; i<right; i++) {
+                    dp[left][right] = Math.max(dp[left][right], newNums[left] * newNums[i] * newNums[right]
+                                              + dp[i][right] + dp[left][i]);
+                }
+            }
+        }
+        return dp[0][index-1];       
     }
 }
 ```
