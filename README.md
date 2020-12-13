@@ -14,6 +14,7 @@
 - [Dec9- Binary Search Tree Iterator](#decemeber-9-binary-search-tree-iterator)
 - [Dec10- Valid Mountain Array](#decemeber-10-valid-mountain-array)
 - [Dec11- Remove Duplicates from Sorted Array II](#decemeber-11-remove-duplicates-from-sorted-array-ii)
+- [Dec12- Smallest Subtree with all the Deepest Nodes](#decemeber-12-smallest-subtree-with-all-the-deepest-nodes)
 
 
 
@@ -452,6 +453,57 @@ class Solution {
             arr[j++] = arr[i];
         }
         return j;
+    }
+}
+```
+
+
+
+### December 12 Smallest Subtree with all the Deepest Nodes
+
+Q:Given the root of a binary tree, the depth of each node is the shortest distance to the root.
+Return the smallest subtree such that it contains all the deepest nodes in the original tree.
+A node is called the deepest if it has the largest depth possible among any node in the entire tree.
+The subtree of a node is tree consisting of that node, plus the set of all descendants of that node.
+
+A:
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int maxDepth =-1;
+    TreeNode result=null;
+    
+    public TreeNode subtreeWithAllDeepest(TreeNode root) {
+        
+        postOrder(root,0);
+        return result;
+    }
+     int postOrder(TreeNode node, int depth){
+        if(node == null) return depth;
+        
+        int left = postOrder(node.left, depth+1);
+        int right = postOrder(node.right, depth+1);
+    
+        if(left==right){
+            maxDepth= Math.max(maxDepth,left);
+            if(maxDepth==left)
+                result = node;
+        }
+        return Math.max(left, right);
     }
 }
 ```
