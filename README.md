@@ -10,12 +10,15 @@
 - [Dec5- The kth Factor of n](#decemeber-5-can-place-flowers)
 - [Dec6- The kth Factor of n](#decemeber-6-populating-next-right-pointers-in-each-node-ii)
 - [Dec7- Spiral Matrix II](#december-7-spiral-matrix-ii)
-- [Dec8- Pairs of Songs With Total Durations Divisible by 60](#decemeber-8-pairs-of-songs-with-total-durations-divisible-by-60)
-- [Dec9- Binary Search Tree Iterator](#decemeber-9-binary-search-tree-iterator)
-- [Dec10- Valid Mountain Array](#decemeber-10-valid-mountain-array)
-- [Dec11- Remove Duplicates from Sorted Array II](#decemeber-11-remove-duplicates-from-sorted-array-ii)
-- [Dec12- Smallest Subtree with all the Deepest Nodes](#decemeber-12-smallest-subtree-with-all-the-deepest-nodes)
-- [Dec12- Burst Balloons](#decemeber-13-burst-balloons)
+- [Dec8- Pairs of Songs With Total Durations Divisible by 60](#december-8-pairs-of-songs-with-total-durations-divisible-by-60)
+- [Dec9- Binary Search Tree Iterator](#december-9-binary-search-tree-iterator)
+- [Dec10- Valid Mountain Array](#december-10-valid-mountain-array)
+- [Dec11- Remove Duplicates from Sorted Array II](#december-11-remove-duplicates-from-sorted-array-ii)
+- [Dec12- Smallest Subtree with all the Deepest Nodes](#december-12-smallest-subtree-with-all-the-deepest-nodes)
+- [Dec13- Burst Balloons](#december-13-burst-balloons)
+- [Dec14- Palindrome Partitioning](#december-14-palindrome-partitioning)
+- [Dec15- Squares of a sorted array](#december-15-squares-of-a-sorted-array)
+
 
 
 
@@ -544,4 +547,76 @@ class Solution {
     }
 }
 ```
+
+
+
+### December 14 Palindrome Partitioning
+
+Q:Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+A palindrome string is a string that reads the same backward as forward.
+
+A:
+```java
+class Solution {
+    public List<List<String>> partition(String s) {
+         List<List<String>> res  = new ArrayList<>();
+        if(s == null || s.length()==0){
+            return res;
+        }
+
+        helper(res, new ArrayList<>(), s);
+        return res;
+    }
+    
+    private void helper(List<List<String>> res, List<String> currList, String inputStr){
+        if(inputStr.length() == 0){
+            res.add(new ArrayList<>(currList));
+            return ;
+        }
+        for(int i=0;i<inputStr.length();i++){
+            String firstPart = inputStr.substring(0, i+1);
+            if(isPalindrome(firstPart)){
+                currList.add(firstPart);
+                String secondPart = inputStr.substring(i+1, inputStr.length());
+                helper(res, currList, secondPart);
+                currList.remove(currList.size() -1);
+
+            }
+        }
+    }
+
+    private boolean isPalindrome(String s){
+        String reversedStr = new StringBuilder(s).reverse().toString();
+        return s.equals(reversedStr);
+    }
+}
+```
+
+
+
+### December 15 Squares of a Sorted Array
+
+Q:Given an integer array nums sorted in non-decreasing order, return an array of the squares of each number sorted in non-decreasing order.
+
+A:
+```java
+class Solution {
+    public int[] sortedSquares(int[] nums) {
+     
+        for(int i=0; i< nums.length; i++){
+            nums[i] = (int)Math.pow(nums[i],2);
+        }
+        
+        Arrays.sort(nums);
+        
+        return nums;
+    }
+}
+```
+
+
+
+
+
+
 
