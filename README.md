@@ -18,6 +18,8 @@
 - [Dec13- Burst Balloons](#december-13-burst-balloons)
 - [Dec14- Palindrome Partitioning](#december-14-palindrome-partitioning)
 - [Dec15- Squares of a sorted array](#december-15-squares-of-a-sorted-array)
+- [Dec16- Validate Binary Search Tree](#december-16-validate-binary-search-tree)
+
 
 
 
@@ -610,6 +612,46 @@ class Solution {
         Arrays.sort(nums);
         
         return nums;
+    }
+}
+```
+
+
+### December 16 Validate Binary Search Tree
+
+Q: Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+A valid BST is defined as follows:
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+A:
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isValidBST(TreeNode root) {
+        return validate(root, null, null);
+    }
+    
+    public boolean validate(TreeNode root, Integer max, Integer min){
+        if(root == null) return true;
+        else if(max!= null && root.val >=max || min!=null && root.val<=min ) return false;
+        else return validate(root.left,root.val,min) && validate(root.right, max, root.val);
+      
     }
 }
 ```
