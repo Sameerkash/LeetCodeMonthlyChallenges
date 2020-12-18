@@ -6,9 +6,9 @@
 - [Dec1- MaxDepth of BT](#decemeber-1-maxdepth-of-a-binary-tree)
 - [Dec2- Random Node of LL](#december-2-linked-list-random-node)
 - [Dec3- Increasing Order of Search Tree](#decemeber-3-increasing-order-search-tree)
-- [Dec4- The kth Factor of n](#decemeber-4-the-kth-factor-of-n)
-- [Dec5- The kth Factor of n](#decemeber-5-can-place-flowers)
-- [Dec6- The kth Factor of n](#decemeber-6-populating-next-right-pointers-in-each-node-ii)
+- [Dec4- The kth Factor of n](#december-4-the-kth-factor-of-n)
+- [Dec5- Can Place Flowers](#december-5-can-place-flowers)
+- [Dec6- The Populating the next right pointer of each node II](#december-6-populating-next-right-pointers-in-each-node-ii)
 - [Dec7- Spiral Matrix II](#december-7-spiral-matrix-ii)
 - [Dec8- Pairs of Songs With Total Durations Divisible by 60](#december-8-pairs-of-songs-with-total-durations-divisible-by-60)
 - [Dec9- Binary Search Tree Iterator](#december-9-binary-search-tree-iterator)
@@ -19,6 +19,9 @@
 - [Dec14- Palindrome Partitioning](#december-14-palindrome-partitioning)
 - [Dec15- Squares of a sorted array](#december-15-squares-of-a-sorted-array)
 - [Dec16- Validate Binary Search Tree](#december-16-validate-binary-search-tree)
+- [Dec17- 4Sum II](#december-17-4sum-ii)
+- [Dec18- Increasing Triplet Subsequence](#december-18-increasing-triplet-subsequence)
+
 
 
 
@@ -146,7 +149,7 @@ class Solution {
 }
 ```
 
-### Decemeber 4 The kth Factor of n
+### December 4 The kth Factor of n
 
 Q: Given two positive integers n and k.
 A factor of an integer n is defined as an integer i where n % i == 0.
@@ -347,7 +350,7 @@ class Solution {
 
 
 
-### December 9  Binary Search Tree Iterator
+### December 9 Binary Search Tree Iterator
 
 Q: Implement the BSTIterator class that represents an iterator over the in-order traversal of a binary search tree (BST):
 BSTIterator(TreeNode root) Initializes an object of the BSTIterator class. The root of the BST is given as part of the constructor. The pointer should be initialized to a non-existent number smaller than any element in the BST.
@@ -652,6 +655,64 @@ class Solution {
         else if(max!= null && root.val >=max || min!=null && root.val<=min ) return false;
         else return validate(root.left,root.val,min) && validate(root.right, max, root.val);
       
+    }
+}
+```
+
+
+### December 17 4Sum II
+
+Q: Given four lists A, B, C, D of integer values, compute how many tuples (i, j, k, l) there are such that A[i] + B[j] + C[k] + D[l] is zero.
+To make problem a bit easier, all A, B, C, D have same length of N where 0 ≤ N ≤ 500. All integers are in the range of -228 to 228 - 1 and the result is guaranteed to be at most 231 - 1.
+
+
+A:
+```java
+class Solution {
+    public int fourSumCount(int[] A, int[] B, int[] C, int[] D) {
+         int count  =0 ;
+     
+        Map<Integer, Integer> map = new HashMap<>();
+        int len = A.length;
+        for(int i =0 ;i<len;i++){
+            for(int j=0;j<len;j++) {
+                int sum = A[i] + B[j];
+                map.put(sum, map.getOrDefault(sum, 0)+1);
+            }
+        }
+        
+        for(int i=0;i<len;i++){
+            for(int j=0;j<len;j++){
+                int sum = C[i] +D[j];
+                count += map.getOrDefault(-sum,0);
+                    
+            }
+        }
+        return count;
+    }
+}
+```
+
+
+
+### December 18 Increasing Triplet Subsequence
+
+Q: Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
+
+
+A:
+```java
+class Solution {
+    public boolean increasingTriplet(int[] nums) {
+        Integer min = Integer.MAX_VALUE;
+        Integer max = Integer.MAX_VALUE;
+        
+        for(int i: nums){
+            if(i < min)min = i;            
+            if(i > min) max= Math.min(max,i);
+            if(i > max) return true;
+        }
+        return false;
     }
 }
 ```
