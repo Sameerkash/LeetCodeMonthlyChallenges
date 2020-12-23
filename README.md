@@ -21,6 +21,12 @@
 - [Dec16- Validate Binary Search Tree](#december-16-validate-binary-search-tree)
 - [Dec17- 4Sum II](#december-17-4sum-ii)
 - [Dec18- Increasing Triplet Subsequence](#december-18-increasing-triplet-subsequence)
+- [Dec19- Cherry Pickup II](#december-19-cherry-pickup-ii)
+- [Dec20- Decoded String at Index](#december-20-decoded-string-at-index)
+- [Dec21- Smallest Range II](#december-21-smallest-range-ii)
+- [Dec22- Balanced Binary Tree](#december-22-balanced-binary-tree)
+- [Dec23- Next Greater Element III](#december-23-next-greater-element-iii)
+
 
 
 
@@ -718,6 +724,192 @@ class Solution {
 ```
 
 
+
+### December 19 Cherry Pickup II
+
+
+Q: Given a rows x cols matrix grid representing a field of cherries. Each cell in grid represents the number of cherries that you can collect.
+You have two robots that can collect cherries for you, Robot #1 is located at the top-left corner (0,0) , and Robot #2 is located at the top-right corner (0, cols-1) of the grid.
+Return the maximum number of cherries collection using both robots  by following the rules below:
+From a cell (i,j), robots can move to cell (i+1, j-1) , (i+1, j) or (i+1, j+1).
+When any robot is passing through a cell, It picks it up all cherries, and the cell becomes an empty cell (0).
+When both robots stay on the same cell, only one of them takes the cherries.
+Both robots cannot move outside of the grid at any moment.
+Both robots should reach the bottom row in the grid.
+
+
+A:
+```java
+class Solution {
+    // TC : O(n*m*m)
+    // SC : O(n*m*m)
+    public int cherryPickup(int[][] grid) {
+        int n = grid.length;
+        int m = grid[0].length;
+
+        // i => Row index for both the robots
+        // j1 => column index for 1st robot
+        // j2 => column index for 2nd robot
+        Integer[][][] dp = new Integer[n][m][m];
+
+        return dfs(grid, n, m, 0, 0, m-1, dp);
+    }
+
+    private int dfs(int[][] grid, int n, int m, int r, int col1, int col2, Integer[][][] dp){
+        if(r<0 || r>=n || col1 <0 || col1>=m || col2 <0 || col2>=m){
+            return 0;
+        }
+
+        if(dp[r][col1][col2]!=null){
+            return dp[r][col1][col2];
+        }
+
+        int maxCherries = 0;
+        for(int i=-1;i<=1;i++){
+            for(int j=-1;j<=1;j++){
+                int newCol1 = col1 + i;
+                int newCol2 = col2+ j;
+                maxCherries = Math.max(maxCherries, dfs(grid, n, m, r+1,newCol1, newCol2, dp ));
+            }
+        }
+        int currCherry = 0;
+        if(col1 == col2){
+            currCherry = grid[r][col1];
+        } else {
+            currCherry = grid[r][col1] + grid[r][col2];
+        }
+
+        dp[r][col1][col2] = currCherry + maxCherries;
+        return dp[r][col1][col2];
+    }
+    
+}
+```
+
+
+
+### December 20 Decoded String at Index
+
+Q: An encoded string S is given.  To find and write the decoded string to a tape, the encoded string is read one character at a time and the following steps are taken:
+If the character read is a letter, that letter is written onto the tape.
+If the character read is a digit (say d), the entire current tape is repeatedly written d-1 more times in total.
+Now for some encoded string S, and an index K, find and return the K-th letter (1 indexed) in the decoded string.
+
+
+
+A:
+```java
+class Solution {
+    public String decodeAtIndex(String S, int K) {
+     long size = 0; 
+		int n = S.length();
+
+		
+		for(char c : S.toCharArray()) {
+			if(Character.isDigit(c)){
+				size = size * (c-'0');
+			}
+			else {
+				size++;
+			}
+		}
+
+		for(int i = n-1; i >= 0; i--) {
+			char c= S.charAt(i);
+			K%=size;
+			if((K == 0 || K == size) && Character.isLetter(c)){
+				return Character.toString(c);
+			}
+			if(Character.isDigit(c)){
+				size = size / (c-'0');
+			}
+			else {
+				size--;
+			}
+		}
+
+		return null;   
+    }
+}
+```
+
+
+
+### December 21 Smallest Range II
+
+Q: Given an integer array nums, return true if there exists a triple of indices (i, j, k) such that i < j < k and nums[i] < nums[j] < nums[k]. If no such indices exists, return false.
+
+
+A:
+```java
+class Solution {
+    public int smallestRangeII(int[] A, int K) {
+         Arrays.sort(A); 
+        int len = A.length -1;
+        int lowest = A[0];
+        int highest = A[len];
+        int res = highest - lowest;
+        for(int i=0;i<len;i++){ 
+            int min = Math.min(lowest + K, A[i+1] -K);
+            int max = Math.max(highest -K, A[i]+K);
+            res =  Math.min(max - min, res);
+        }
+        return res;
+    }
+}
+```
+
+
+
+### December 22 Balanced Binary Tree
+
+Q: Given a binary tree, determine if it is height-balanced.
+For this problem, a height-balanced binary tree is defined as:
+a binary tree in which the left and right subtrees of every node differ in height by no more than 1.
+
+
+A:
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public boolean isBalanced(TreeNode root) {
+         if (root == null) return true;
+        return  (Math.abs(height(root.left) - height(root.right)) <= 1) && isBalanced(root.left) &&  isBalanced(root.right);
+    }
+    
+    public int height(TreeNode root) {
+        if (root == null) return 0;
+        return 1+Math.max(height(root.left), height(root.right));
+    }
+}
+```
+
+
+
+### December 23 Next Greater Element III
+
+Q: Given a positive integer n, find the smallest integer which has exactly the same digits existing in the integer n and is greater in value than n. If no such positive integer exists, return -1.
+Note that the returned integer should fit in 32-bit integer, if there is a valid answer but it does not fit in 32-bit integer, return -1.
+
+
+A:
+```java
+
+```
 
 
 
