@@ -908,7 +908,64 @@ Note that the returned integer should fit in 32-bit integer, if there is a valid
 
 A:
 ```java
+class Solution {
+    public int nextGreaterElement(int n) {
+        
+    char[] str = (n+"").toCharArray();
 
+        int deflectionPoint = str.length-1;
+
+        while(deflectionPoint>0){
+            if(str[deflectionPoint] > str[deflectionPoint-1]) {
+                break;
+            }
+            deflectionPoint--;
+        }
+        if(deflectionPoint == 0){
+            return -1;
+        }
+
+        int firstSwappingIndex = deflectionPoint -1;
+
+        int secondSwappingIndex = str.length -1;
+        while(secondSwappingIndex>=firstSwappingIndex){
+            if(str[firstSwappingIndex] < str[secondSwappingIndex]) {
+                break;
+            }
+            secondSwappingIndex--;
+        }
+
+        // swap
+
+        char temp = str[firstSwappingIndex];
+        str[firstSwappingIndex] = str[secondSwappingIndex];
+        str[secondSwappingIndex] = temp;
+
+        // swapping at the point of deflection
+
+        reverseChar(str, deflectionPoint);
+        Long no = Long.parseLong(new String(str));
+        if(no<=Integer.MAX_VALUE){
+            return no.intValue();
+        } else{
+            return -1;
+        }
+
+    }
+
+    private void reverseChar(char[] str, int i){
+        int start = i;
+        int end =str.length-1;
+        while(end>=start){
+            char temp = str[start];
+            str[start] = str[end];
+            str[end] = temp;
+            end--;
+            start++;
+
+        }
+    }
+}
 ```
 
 
