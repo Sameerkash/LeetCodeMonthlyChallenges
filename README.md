@@ -26,9 +26,8 @@
 - [Dec21- Smallest Range II](#december-21-smallest-range-ii)
 - [Dec22- Balanced Binary Tree](#december-22-balanced-binary-tree)
 - [Dec23- Next Greater Element III](#december-23-next-greater-element-iii)
-
-
-
+- [Dec24- Swap Nodes in Pairs](#december-24-swap-nodes-in-pairs)
+- [Dec25- Diagonal Traverse](#december-25-diagonal-traverse)
 
 
 
@@ -964,6 +963,91 @@ class Solution {
             start++;
 
         }
+    }
+}
+```
+
+
+
+
+### December 24 Swap Nodes in Pairs
+
+Q: Given a linked list, swap every two adjacent nodes and return its head.
+You may not modify the values in the list's nodes. Only nodes itself may be changed.
+
+A:
+```java
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head == null || head.next == null)
+            return head;
+        
+      ListNode dummy = new ListNode(-1), prev = dummy, current = head;
+        while(current != null && current.next != null) {
+            prev.next = current.next;
+            current.next = current.next.next;
+            prev.next.next = current;
+            current = current.next;
+            prev = prev.next.next;
+        }
+        
+        return dummy.next;
+        
+    }
+}
+```
+
+
+
+
+### December 25 Diagonal Traverse
+
+Q: Given a matrix of M x N elements (M rows, N columns), return all elements of the matrix in diagonal order as shown in the below image.
+
+A:
+```java
+class Solution {
+    public int[] findDiagonalOrder(int[][] matrix) {
+         if (matrix.length == 0)
+            return new int[0];
+
+        int m = matrix.length, n = matrix[0].length, r = 0, c = 0;
+        int[] result = new int[m * n];
+
+        for (int i = 0; i < result.length; i++) {
+            result[i] = matrix[r][c];
+            if ((r + c) % 2 == 0) {
+                if (c == n - 1) {
+                    r++;
+                } else if (r == 0) {
+                    c++;
+                } else {
+                    r--;
+                    c++;
+                }
+            } else {
+                if (r == m - 1) {
+                    c++;
+                } else if (c == 0) {
+                    r++;
+                } else {
+                    r++;
+                    c--;
+                }
+            }
+        }
+
+        return result;
     }
 }
 ```
