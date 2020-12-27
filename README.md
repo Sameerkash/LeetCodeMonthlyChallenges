@@ -28,6 +28,8 @@
 - [Dec23- Next Greater Element III](#december-23-next-greater-element-iii)
 - [Dec24- Swap Nodes in Pairs](#december-24-swap-nodes-in-pairs)
 - [Dec25- Diagonal Traverse](#december-25-diagonal-traverse)
+- [Dec25- Decode Ways](#december-26-decode-ways)
+
 
 
 
@@ -1048,6 +1050,63 @@ class Solution {
         }
 
         return result;
+    }
+}
+```
+
+
+
+
+
+### December 26 Decode Ways
+
+Q: A message containing letters from A-Z is being encoded to numbers using the following mapping:
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+Given a non-empty string containing only digits, determine the total number of ways to decode it.
+The answer is guaranteed to fit in a 32-bit integer.
+
+A:
+```java
+class Solution {
+    public int numDecodings(String s) {
+     int[] dp = new int[s.length()];
+        if(s.charAt(0) == '0'){
+            return 0;
+        }
+        
+        dp[0] =1;
+        
+        for(int i=1;i<s.length();i++){
+            int tens = s.charAt(i-1) -'0';// prev char
+            int ones = s.charAt(i) -'0';// curr char
+            
+            if(ones == 0 && tens!=1 && tens!=2){ // 16382284870.......
+                
+                return 0;
+            }
+            int no = getNo(tens,ones);
+            if(no <=26 && no>=10){
+                if(i>=2){
+                    dp[i] += dp[i-2];
+                } else{ 
+                    dp[i] +=1;
+                }
+            }
+            
+            if(no!=10 && no!=20){
+                dp[i] =dp[i] + dp[i-1];
+            }
+            
+        }
+        return dp[s.length()-1];
+        
+    }
+    
+    private int getNo(int tens, int ones){
+        return 10*tens + ones;
     }
 }
 ```
