@@ -28,7 +28,14 @@
 - [Dec23- Next Greater Element III](#december-23-next-greater-element-iii)
 - [Dec24- Swap Nodes in Pairs](#december-24-swap-nodes-in-pairs)
 - [Dec25- Diagonal Traverse](#december-25-diagonal-traverse)
-- [Dec25- Decode Ways](#december-26-decode-ways)
+- [Dec26- Decode Ways](#december-26-decode-ways)
+- [Dec27- Jump Game IV](#december-27-jump-game-iv)
+- [Dec28- Reach a Number](#december-28-reach-a-number)
+- [Dec29- Pseudo-Palindromic Paths in a Binary Tree](#december-29-pseudo-palindromic-paths-in-a-binary-tree)
+- [Dec30- Game of Life](#december-30-game-of-life)
+- [Dec31- Largest Rectangle in Histogram](#december-31-largest-rectangle-in-histogram)
+
+
 
 
 
@@ -1110,6 +1117,243 @@ class Solution {
     }
 }
 ```
+
+
+
+
+### December 27 Decode Ways
+
+Q: A message containing letters from A-Z is being encoded to numbers using the following mapping:
+
+A:
+```java
+
+```
+
+
+### December 27 Jump Game IV
+
+Q: Given an array of integers arr, you are initially positioned at the first index of the array.
+
+In one step you can jump from index i to index:
+
+i + 1 where: i + 1 < arr.length.
+i - 1 where: i - 1 >= 0.
+j where: arr[i] == arr[j] and i != j.
+Return the minimum number of steps to reach the last index of the array.
+
+Notice that you can not jump outside of the array at any time.
+
+A:
+```java
+class Solution {
+    public int minJumps(int[] arr) {
+     
+        int n = arr.length;
+        if(n==1) return 0;
+        
+        Map<Integer,List<Integer>> map = new HashMap<>();
+        int step =0;
+        
+        
+        for(int i =0;i<n ;i++) 
+            map.computeIfAbsent(arr[i], v-> new ArrayList<>()).add(i);
+        
+        Queue<Integer> q = new LinkedList<>();
+        q.offer(0);
+        
+        while(!q.isEmpty()){
+            step++;
+            int size = q.size();
+            
+            for(int i=0; i< size;i++){
+                int j = q.poll();
+                
+                if(j-1>-0 && map.containsKey(arr[j-1])){
+                    q.offer(j-1);
+                }
+                
+                if(j+1 < n && map.containsKey(arr[j+1])){
+                    if(j+1 == n-1) return step;
+                    q.offer(j+1);
+                }
+                
+                if(map.containsKey(arr[j])){
+                    for(int k:map.get(arr[j])){
+                        if(k!=j){
+                            if(k==n-1) return step;
+                            q.offer(k);
+                        }
+                    }
+                }
+                
+                map.remove(arr[j]);
+            }
+        }
+        return step;
+    }
+}
+```
+
+
+### December 28 Reach a Number
+
+Q: You are standing at position 0 on an infinite number line. There is a goal at position target.
+
+On each move, you can either go left or right. During the n-th move (starting from 1), you take n steps.
+
+Return the minimum number of steps required to reach the destination.
+
+A:
+```java
+class Solution {
+    public int reachNumber(int target) {
+        int steps = 0;
+        int sum = 0;
+        
+        if(target == 0) return 0;
+        target = Math.abs(target);
+        
+        
+        while(sum< target){
+            sum+=steps;
+            steps++;
+        }
+        
+        while((sum-target)%2 ==1){
+            sum+= steps;
+            steps++;
+        }
+        
+        return steps-1;
+    }
+}
+```
+
+
+### December 29 Pseudo-Palindromic Paths in a Binary Tree
+
+Q: Given a binary tree where node values are digits from 1 to 9. A path in the binary tree is said to be pseudo-palindromic if at least one permutation of the node values in the path is a palindrome.
+
+Return the number of pseudo-palindromic paths going from the root node to leaf nodes.
+
+
+A:
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+     int count = 0;
+    
+    public int pseudoPalindromicPaths(TreeNode root) {
+        dfs(root, 0);
+        return count;
+    }
+
+    private void dfs(TreeNode root, int path) {
+        if (root == null)
+            return;
+        path = path ^ (1 << root.val);
+        if (root.left == null && root.right == null) {
+            // count += Integer.bitCount(path) <= 1 ? 1 : 0;
+            count += (path & (path - 1)) == 0 ? 1 : 0; // check if number of set bit is <= 1
+            return;
+        }
+        dfs(root.left, path);
+        dfs(root.right, path);
+    }
+
+```
+
+
+### December 30 Game of Life
+
+Q: According to Wikipedia's article: "The Game of Life, also known simply as Life, is a cellular automaton devised by the British mathematician John Horton Conway in 1970."
+
+The board is made up of an m x n grid of cells, where each cell has an initial state: live (represented by a 1) or dead (represented by a 0). Each cell interacts with its eight neighbors (horizontal, vertical, diagonal) using the following four rules (taken from the above Wikipedia article):
+
+Any live cell with fewer than two live neighbors dies as if caused by under-population.
+Any live cell with two or three live neighbors lives on to the next generation.
+Any live cell with more than three live neighbors dies, as if by over-population.
+Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
+The next state is created by applying the above rules simultaneously to every cell in the current state, where births and deaths occur simultaneously. Given the current state of the m x n grid board, return the next state.
+
+A:
+```java
+class Solution {
+    public void gameOfLife(int[][] board) {
+     int R = board.length;
+        int C = board[0].length;
+
+        int[] dx = {1, 1, 0, -1, -1, -1, 0, 1};
+        int[] dy = {0, 1, 1, 1, 0, -1, -1, -1};
+
+        for (int i = 0; i < R; i++) {
+            for (int j = 0; j < C; j++) {
+                int liveCounts = 0;
+                for (int k = 0; k < 8; k++)
+                    if (isSafe(i + dx[k], j + dy[k], R, C) && Math.abs(board[i + dx[k]][j + dy[k]]) == 1)
+                        liveCounts++;
+
+                if (board[i][j] == 0 && liveCounts == 3)
+                    board[i][j] = 2;
+                if (board[i][j] == 1 && (liveCounts < 2 || liveCounts > 3))
+                    board[i][j] = -1;
+            }
+        }
+
+        for (int i = 0; i < R; i++)
+            for (int j = 0; j < C; j++)
+                board[i][j] = board[i][j] > 0 ? 1 : 0;
+    }
+
+    private boolean isSafe(int x, int y, int R, int C) {
+        return (x >= 0 && x < R && y >= 0 && y < C);
+    }
+}
+```
+
+
+### December 31 Largest Rectangle in Histogram
+
+Q: Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
+
+
+A:
+```java
+class Solution {
+      public int largestRectangleArea(int[] heights) {
+        return calculateArea(heights, 0, heights.length - 1);
+    }
+    
+    private int calculateArea(int[] heights, int start, int end) {
+        if (start > end)
+            return 0;
+        int minindex = start;
+        for (int i = start; i <= end; i++)
+            if (heights[minindex] > heights[i])
+                minindex = i;
+        return Math.max(heights[minindex] * (end - start + 1), 
+                        Math.max(calculateArea(heights, start, minindex - 1), 
+                                 calculateArea(heights, minindex + 1, end)));
+    }
+    
+}
+```
+
 
 
 
