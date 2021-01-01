@@ -15,9 +15,9 @@ A:
 ```
  --->
 
-# LeetCode December Challange
+# LeetCode January Challange
 
-**LeetCode December Challenge 2020 in Java**
+**LeetCode January Challenge 2021 in Java**
 
 **Table of Content**
 
