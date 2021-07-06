@@ -1,54 +1,6 @@
 class Solution {
     public boolean canFinish(int numCourses, int[][] prerequisites) {
 
-        ArrayList<Integer>[] list = new ArrayList[numCourses];
-        int []visited = new int[numCourses];
-        
-        for( int i = 0; i< numCourses; i++){
-            list[i] = new ArrayList<Integer>();
-        }
-        
-        for(int i =0; i < prerequisites.length; i++){
-            list[prerequisites[i][0]].add(prerequisites[i][1]);
-        }
-        
-        for(int i = 0; i< numCourses; i++){
-            if(visited[i] == 0){
-                if(isCyclic(i, visited, list))
-                    return false;
-            }
-        }
-        return true;
-    }
-    
-    boolean isCyclic(int i , int []visited, ArrayList<Integer>[] list){
-        
-        if(visited[i] == 2) return true;
-        
-        if(visited[i] == 1) return false;
-        
-        visited[i] = 2;
-        
-        
-        for(int j = 0; j < list[i].size(); j++){
-            if(isCyclic(list[i].get(j), visited, list))
-                return true;
-        }
-        
-        visited[i] = 1;
-        return false;
-        
-    }
-}
-
-
-
-
-
-
-/*
-
-     
        ArrayList<Integer>[] list=new ArrayList[numCourses];
         
         // to maintain the state of node 
@@ -101,5 +53,17 @@ class Solution {
         visited[i] = 1;
         
         return false;
+        
+    }
+}
+
+
+
+
+
+
+/*
+
+   
 
 */
